@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class CollabhubBackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CollabhubBackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CollabhubBackendApplication.class, args);
+    }
 
 }
