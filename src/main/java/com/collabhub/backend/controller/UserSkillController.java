@@ -9,6 +9,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/user-skills")
+@CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+
 public class UserSkillController {
 
     private final UserSkillService service;

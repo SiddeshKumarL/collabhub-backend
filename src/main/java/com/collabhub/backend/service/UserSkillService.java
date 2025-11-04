@@ -24,8 +24,9 @@ public class UserSkillService {
         this.skillRepo = skillRepo;
     }
 
+    // Return user skills with nested skill populated
     public List<UserSkill> list(UUID userId) {
-        return userSkillRepo.findByUserId(userId);
+        return userSkillRepo.findAllByUserIdWithSkill(userId);
     }
 
     public UserSkill add(UUID userId, UUID skillId, String skillType, String proficiency) {
@@ -33,7 +34,9 @@ public class UserSkillService {
         Skill skill = skillRepo.findById(skillId).orElseThrow();
 
         UserSkill us = new UserSkill();
-        us.setId(UUID.randomUUID()); // set id here if your DB doesn’t auto-generate
+        // If your entity has @GeneratedValue, remove the next line.
+        // us.setId(UUID.randomUUID());
+
         us.setUser(user);
         us.setSkill(skill);
         us.setSkillType(skillType);

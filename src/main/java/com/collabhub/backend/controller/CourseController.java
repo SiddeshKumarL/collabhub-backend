@@ -9,6 +9,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/courses")
+@CrossOrigin(origins = {"http://localhost:8081"}, allowCredentials = "true")
+
 public class CourseController {
 
     private final AppService appService;
