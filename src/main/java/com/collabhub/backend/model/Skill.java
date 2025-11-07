@@ -5,10 +5,12 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Data
 @Table(name = "skills")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Skill {
 
     @Id
@@ -21,21 +23,20 @@ public class Skill {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    // In DB it appears as "skill_difficulty"
     @Column(name = "skill_difficulty")
     private String difficulty;
 
-    // In DB it appears as "pdf_url"
-    @Column(name = "pdf_url")
-    private String pdfurl;
-
-    // In DB it appears as "mindmap_url"
     @Column(name = "mindmap_url")
-    private String mindmap;
+    private String mindmapUrl;
+
+    @Column(name = "pdf_url")
+    private String pdfUrl;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    // One skill can belong to multiple users (through user_skills)
     @OneToMany(mappedBy = "skill", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("skill") // prevent infinite recursion
     private List<UserSkill> userSkills;
 }

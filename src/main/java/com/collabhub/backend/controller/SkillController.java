@@ -8,6 +8,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/skills")
+@CrossOrigin(origins = "http://localhost:8081") // adjust if frontend port differs
+
 public class SkillController {
 
     private final SkillRepository skillRepository;

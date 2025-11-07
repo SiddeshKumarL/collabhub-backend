@@ -5,10 +5,12 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Data
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // safe guard
 public class User {
 
     @Id
@@ -33,11 +35,13 @@ public class User {
     @Column(name = "role")
     private String role; // e.g. "MENTOR", "STUDENT"
 
-    // 🔹 Relationship with Profile (One user has one profile)
+    // One user has one profile
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("user") // avoid back loop from Profile
     private Profile profile;
 
-    // 🔹 Relationship with UserSkill (One user has many skills)
+    // One user can have multiple skills
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user") // prevent infinite recursion
     private List<UserSkill> userSkills;
 }

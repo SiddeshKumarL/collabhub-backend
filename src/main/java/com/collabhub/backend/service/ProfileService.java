@@ -15,27 +15,23 @@ public class ProfileService {
         this.profileRepository = profileRepository;
     }
 
-    // 🔹 Get profile by its primary ID
     public Profile getProfile(UUID id) {
         return profileRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Profile not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Profile not found"));
     }
 
-    // 🔹 Update profile
     public Profile updateProfile(UUID id, Profile updatedProfile) {
         Profile existingProfile = getProfile(id);
-
-        // Map only the updatable fields
         existingProfile.setFullName(updatedProfile.getFullName());
         existingProfile.setBio(updatedProfile.getBio());
-        existingProfile.setEmail(updatedProfile.getEmail());
-
+        existingProfile.setLinkedinUrl(updatedProfile.getLinkedinUrl());
+        existingProfile.setGithubUrl(updatedProfile.getGithubUrl());
+        existingProfile.setAvatarUrl(updatedProfile.getAvatarUrl());
         return profileRepository.save(existingProfile);
     }
 
-    // 🔹 Get profile by User ID
     public Profile getProfileByUserId(UUID userId) {
-        return profileRepository.findByUserId(userId)
+        return profileRepository.findByUser_Id(userId)
                 .orElseThrow(() -> new RuntimeException("Profile not found for user ID: " + userId));
     }
 }

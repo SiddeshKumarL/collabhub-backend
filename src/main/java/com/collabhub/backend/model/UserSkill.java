@@ -4,23 +4,27 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Data
 @Table(name = "user_skills")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UserSkill {
 
     @Id
     @Column(columnDefinition = "uuid")
-    private UUID id; // remove @GeneratedValue if rows are pre-seeded with UUIDs
+    private UUID id; // remove @GeneratedValue if your DB already has UUIDs
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // ensure User entity uses @Id UUID and @Table(name="users")
+    @JsonIgnoreProperties("userSkills") // stop loop back to user
+    private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "skill_id", nullable = false)
-    private Skill skill; // your Skill entity already mapped
+    @JsonIgnoreProperties("userSkills") // stop loop back to skill
+    private Skill skill;
 
     @Column(name = "skill_type")
     private String skillType; // e.g., TECHNICAL | SOFT | TOOL

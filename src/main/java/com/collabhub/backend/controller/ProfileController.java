@@ -18,24 +18,25 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    // 🔹 GET: Profile by ID
     @GetMapping("/{id}")
     public ResponseEntity<Profile> getProfile(@PathVariable UUID id) {
         Profile profile = profileService.getProfile(id);
         return ResponseEntity.ok(profile);
     }
 
-    // 🔹 PUT: Update profile by ID
     @PutMapping("/{id}")
     public ResponseEntity<Profile> updateProfile(@PathVariable UUID id, @RequestBody Profile updatedProfile) {
         Profile profile = profileService.updateProfile(id, updatedProfile);
         return ResponseEntity.ok(profile);
     }
 
-    // 🔹 GET: Profile by linked User ID
     @GetMapping("/user/{userId}")
-    public ResponseEntity<Profile> getProfileByUserId(@PathVariable UUID userId) {
-        Profile profile = profileService.getProfileByUserId(userId);
-        return ResponseEntity.ok(profile);
+    public ResponseEntity<?> getProfileByUserId(@PathVariable UUID userId) {
+        try {
+            Profile profile = profileService.getProfileByUserId(userId);
+            return ResponseEntity.ok(profile);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 }

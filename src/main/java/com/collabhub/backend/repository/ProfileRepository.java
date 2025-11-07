@@ -11,7 +11,7 @@ import java.util.UUID;
 public interface ProfileRepository extends JpaRepository<Profile, UUID> {
 
     // Find profile by linked user ID
-    Optional<Profile> findByUserId(UUID userId);
+    Optional<Profile> findByUser_Id(UUID userId);
 
     // Optionally find profile by email
     Optional<Profile> findByEmail(String email);
