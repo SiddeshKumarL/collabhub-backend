@@ -25,11 +25,7 @@ public class UserSkillController {
         return service.list(userId);
     }
 
-    // Or keep path param if you prefer:
-    // @GetMapping("/{userId}")
-    // public List<UserSkill> getUserSkills(@PathVariable UUID userId) {
-    //     return service.list(userId);
-    // }
+
 
     // POST /api/user-skills
     @PostMapping
